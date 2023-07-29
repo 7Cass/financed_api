@@ -32,7 +32,6 @@ router.post('/', async (req, res) => {
     try {
         const { balance, user } = req.body;
 
-        // todo: Add verificação qnd houver user_id vinculado ao wallet
         const walletAlreadyExists = await Wallet.findOne({ user });
 
         if (walletAlreadyExists) {
