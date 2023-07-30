@@ -1,4 +1,4 @@
-import {loadEnv} from "./loadEnv.mjs";
+import {loadEnv} from "./initializers/loadEnv.mjs";
 import 'express-async-errors';
 import express from 'express';
 import cors from 'cors';
