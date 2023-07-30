@@ -9,7 +9,11 @@ const WalletSchema = new mongoose.Schema(
         user: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Users'
-        }
+        },
+        transactions: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Transactions'
+        }]
     },
     { timestamps: true }
 );

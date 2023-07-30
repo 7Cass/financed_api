@@ -1,11 +1,12 @@
 import { Router } from 'express';
 import {Wallet} from "../models/wallet.mjs";
+import {ensureAuth} from "../middlewares/ensureAuth.mjs";
 
 const router = Router();
 
-router.get('/', async (req, res) => {
+router.get('/', ensureAuth, async (req, res) => {
     try {
-        const walletList = await Wallet.find().populate('user');
+        const walletList = await Wallet.find().populate(['user', 'transactions']);
 
         res.status(200).json({ data: walletList });
     } catch (e) {
@@ -15,10 +16,10 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', ensureAuth, async (req, res) => {
     try {
         const { id } = req.params;
-        const wallet = await Wallet.findOne({ _id: id }).populate('user');
+        const wallet = await Wallet.findOne({ _id: id }).populate(['user', 'transactions']);
 
         res.status(200).json({ data: wallet });
     } catch (e) {
@@ -28,9 +29,11 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', ensureAuth, async (req, res) => {
     try {
         const { balance, user } = req.body;
+
+        if (!user) return res.status(400).json({ data: 'Invalid body, you must pass a user. Ex: "user": "8b64c5a45b6"' });
 
         const walletAlreadyExists = await Wallet.findOne({ user });
 
@@ -43,7 +46,7 @@ router.post('/', async (req, res) => {
             user
         });
 
-        const newWallet = await Wallet.find({user}).populate('user');
+        const newWallet = await Wallet.findOne({user}).populate('user');
 
         res.status(201).json({ data: newWallet });
     } catch (e) {

@@ -1,3 +1,8 @@
 import dotenv from 'dotenv';
+import Logger from "./utils/logger.mjs";
 
-dotenv.config();
+export function loadEnv() {
+    dotenv.config();
+
+    Logger.verbose('Loaded Environment Variables.');
+}
