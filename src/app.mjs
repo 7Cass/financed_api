@@ -28,8 +28,8 @@ app.listen(PORT, async () => {
     await connectDb();
     Logger.verbose(`🚀 Server is running on port: ${PORT}.`);
     Logger.verbose('🔧 Initializing Ping Cron Job.');
-    cron.schedule('* * * * *', async () => {
-        Logger.log('🛰️Cron running ' + new Date().toString());
-        await fetch('https://financed-api.onrender.com/ping');
-    });
+    // cron.schedule('* * * * *', async () => {
+    //     Logger.log('🛰️Cron running ' + new Date().toString());
+    //     await fetch('https://financed-api.onrender.com/ping');
+    // });
 });
