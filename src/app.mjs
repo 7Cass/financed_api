@@ -22,5 +22,5 @@ app.use('/transaction', transaction);
 
 app.listen(PORT, async () => {
     await connectDb();
-    Logger.verbose(`Server is running on port: ${PORT}`);
+    Logger.verbose(`🚀 Server is running on port: ${PORT}`);
 });
