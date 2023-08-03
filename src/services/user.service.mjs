@@ -6,7 +6,14 @@ class UserService {
     }
 
     async findById(userId) {
-        return User.findOne({_id: userId});
+        return User.findOne({_id: userId}).populate({
+            path: 'wallet',
+            model: 'Wallets',
+            populate: {
+                path: 'transactions',
+                model: 'Transactions'
+            }
+        });
     }
 
     async findByEmail(email) {

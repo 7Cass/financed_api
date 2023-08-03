@@ -1,9 +1,16 @@
 import {Wallet} from "../models/wallet.mjs";
 import TransactionService from "./transaction.service.mjs";
+import {User} from "../models/user.mjs";
 
 class WalletService {
     async create(createWalletDto) {
-        return Wallet.create(createWalletDto);
+        const wallet = await Wallet.create(createWalletDto);
+        await User.findByIdAndUpdate(
+            { _id: createWalletDto.user },
+            { wallet: wallet._id }
+        );
+
+        return wallet;
     }
 
     async findAll() {
